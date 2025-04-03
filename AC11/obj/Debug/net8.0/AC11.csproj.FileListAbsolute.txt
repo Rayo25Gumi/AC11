@@ -1,0 +1,11 @@
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/bin/Debug/net8.0/AC11
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/bin/Debug/net8.0/AC11.dll
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/bin/Debug/net8.0/AC11.pdb
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.GeneratedMSBuildEditorConfig.editorconfig
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.AssemblyInfoInputs.cache
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.AssemblyInfo.cs
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.csproj.CoreCompileInputs.cache
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.sourcelink.json
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.dll
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/refint/AC11.dll
+/Users/marc/Documents/Clase/Programación/3r Trimestre/AC11/AC11/obj/Debug/net8.0/AC11.pdb
