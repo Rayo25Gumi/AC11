@@ -43,13 +43,22 @@ public class Tareas
 public class Clientes : Personas
 {
     public double Pagado { get; set; }
+
+    public List<Proyectos> Proyecto { get; set; } = new List<Proyectos>();
+
     public double Adelanto { get; set; }
 
-    public Clientes(string nombre, string dni, double pagado, double adelanto)
+    public Clientes(string nombre, string dni, double adelanto, Proyectos proyecto)
         : base(nombre, dni)
     {
-        Pagado = pagado;
         Adelanto = adelanto;
+        Pagado = CalcularPagado(proyecto);
+    }
+
+    public double CalcularPagado(Proyectos proyecto)
+    {
+        double pagoPorDías = proyecto.Dias * 53;
+        return Adelanto + pagoPorDías;
     }
 }
 
@@ -58,13 +67,14 @@ public class Proveedores : Personas
     public Proveedores(string nombre, string dni)
         : base(nombre, dni) { }
 }
-
 public class Proyectos
 {
     public string NombreProyecto { get; set; }
     public string Descripcion { get; set; }
     public int Dias { get; set; }
+    public int NumeroEmpleados { get; set; }
     public List<Empleados> Empleado { get; set; } = new List<Empleados>();
+    public int NumeroTareas { get; set; }
     public List<Tareas> Tarea { get; set; } = new List<Tareas>();
     public List<Clientes> Cliente { get; set; } = new List<Clientes>();
     public List<Proveedores> Proveedor { get; set; } = new List<Proveedores>();
@@ -77,7 +87,23 @@ public class Proyectos
         Descripcion = descripcion;
         Dias = dias;
         Costo = CostoEstimado(dias);
+    }
+
+    public void ActualizarDatos()
+    {
+        NumeroEmpleados = CalcularNumeroEmpleados();
+        NumeroTareas = CalcularNumeroTareas();
         Estado = EstadoProyecto();
+    }
+
+    public int CalcularNumeroEmpleados()
+    {
+        return Empleado.Count;
+    }
+
+    public int CalcularNumeroTareas()
+    {
+        return Tarea.Count;
     }
 
     public string EstadoProyecto()
@@ -96,7 +122,7 @@ public class Proyectos
     {
         double costedia = 53;
         double total = a * costedia;
-        return (total);
+        return total;
     }
 }
 
@@ -107,6 +133,7 @@ internal class Program
         List<Proyectos> proyectos = new List<Proyectos>();
         string respuesta;
 
+
         do
         {
             Console.WriteLine("Escribe los datos del proyecto:");
@@ -116,7 +143,7 @@ internal class Program
             Console.Write("Descripción: ");
             string descripcion = Console.ReadLine();
 
-            Console.Write("Duración en días: ");
+            Console.Write("Días de trabajo: ");
             int dias = Convert.ToInt32(Console.ReadLine());
 
             Proyectos nuevoProyecto = new Proyectos(nombreProyecto, descripcion, dias);
@@ -171,14 +198,11 @@ internal class Program
                 Console.WriteLine("DNI del cliente: ");
                 string dniCliente = Console.ReadLine();
 
-                Console.WriteLine("Cantidad pagada: ");
-                double pagado = Convert.ToDouble(Console.ReadLine());
-
                 Console.WriteLine("Cantidad adelantada: ");
                 double adelanto = Convert.ToDouble(Console.ReadLine());
 
                 nuevoProyecto.Cliente.Add(
-                    new Clientes(nombreCliente, dniCliente, pagado, adelanto)
+                    new Clientes(nombreCliente, dniCliente, adelanto, nuevoProyecto)
                 );
 
                 Console.WriteLine("Quieres registrar otro cliente? Escribe si/no");
@@ -199,22 +223,26 @@ internal class Program
                 Console.WriteLine("Quieres registrar otro proveedor? Escribe si/no");
                 respuesta = Console.ReadLine();
             } while (respuesta == "si");
-
+            
+            nuevoProyecto.ActualizarDatos();
             proyectos.Add(nuevoProyecto);
 
             Console.WriteLine("Quieres registrar otro proyecto? Escribe si/no");
             respuesta = Console.ReadLine();
         } while (respuesta == "si");
+        
         Console.WriteLine("Resumen de proyectos:");
         foreach (var proyecto in proyectos)
         {
             Console.WriteLine($"Proyecto: {proyecto.NombreProyecto}");
             Console.WriteLine($"Descripción: {proyecto.Descripcion}");
-            Console.WriteLine($"Duración: {proyecto.Dias} días");
+            Console.WriteLine($"Llevan: {proyecto.Dias} días");
             Console.WriteLine($"Costo estimado: {proyecto.Costo} €");
             Console.WriteLine($"Estado: {proyecto.Estado}");
 
             Console.WriteLine("Trabajadores asignados:");
+            Console.WriteLine($" Total Empleados: {proyecto.NumeroEmpleados}");
+
             foreach (var empleado in proyecto.Empleado)
             {
                 Console.WriteLine(
@@ -223,6 +251,8 @@ internal class Program
             }
 
             Console.WriteLine("Tareas:");
+            Console.WriteLine($" Total Tareas: {proyecto.NumeroTareas}");
+
             foreach (var tarea in proyecto.Tarea)
             {
                 Console.WriteLine(
